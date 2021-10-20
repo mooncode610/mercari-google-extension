@@ -1,0 +1,32 @@
+{
+    "name": "Mercari Extension",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_title": "This is action"
+    },
+    "description" : "We can add detail infomration in category",
+    "icons": {    
+        "128": "images/logo.png",
+        "16": "images/logo_16.png",
+        "48": "images/logo_48.png" },
+    "permissions": [
+        "activeTab", 
+        "scripting",
+        "declarativeContent",
+        "webNavigation",
+        "nativeMessaging",
+        "webRequest",
+        "tabs",
+        "storage"],
+    "host_permissions": [
+          "<all_urls>"
+        ],
+    "background": {
+      "service_worker": "backgrondServices/mercari.js"
+    },
+    "content_scripts": [ {
+      "matches": ["https://*/*"],
+      "js": ["js/jquery.js"]
+    } ]
+  }
