@@ -16,6 +16,7 @@ const updateDetailInfo = () => {
         // console.log($(detailInfoEL[4]),$($('div',$(detailInfoEL[4]))[0]),$(detailInfoEL[4]).context.children);
         // return;
         let buyer = result.buyer;
+        if(!buyer) buyer={name:"No buyer"};
         let createdDate = new Date(1000 * result.created);
         let updatedDate = new Date(1000 * result.updated);
         console.log(container);
