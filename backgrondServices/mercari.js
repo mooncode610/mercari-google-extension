@@ -7,22 +7,39 @@ let visitedURL = [];
 
 const filter = {
     url: [
-        {hostContains: "jp.mercari.com"},
+        // {urlContains: "jp.mercari.com/item"},
     ],
 };
 var callback = function(details) {};
 var opt_extraInfoSpec = [];
-
-chrome.webNavigation.onCompleted.addListener((details) => {                        //on document ready event
-    console.log("on docu ready",details);
-    
-    chrome.scripting.executeScript(
-    {
-        target: {tabId: details.tabId},
-        files:['js/addInfo.js']
-    },
-    (injectionResults) => {
-        
+let lastURL = "";
+chrome.tabs.onUpdated.addListener((tabId, changeInfo,tab) => {                        //on document ready event
+    console.log("will start",tab.url,changeInfo.status)
+    if(changeInfo.status !== "complete") return;
+    // if(lastURL === tab.url) return;
+    // console.log(lastURL, tab.url);
+    lastURL = tab.url;
+    if(tab.url.includes("jp.mercari.com/item")){
+        chrome.scripting.executeScript({
+            target: {tabId: tabId},
+            files:['js/addInfo.js']
+        },
+        (injectionResults) => {
+            
+        });
     }
-);
-}, filter);
+    if(tab.url.includes("jp.mercari.com/user/reviews")){
+        console.log("review")
+        chrome.scripting.executeScript({
+            target: {tabId: tabId},
+            files:['js/review.js']
+        },
+        (injectionResults) => {
+            
+        });
+    }
+    
+});
+chrome.webNavigation.onCompleted.addListener(function(tab) {
+    
+});
